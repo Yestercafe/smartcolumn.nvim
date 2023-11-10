@@ -1,12 +1,11 @@
 local smartcolumn = {}
 
-local active = true
-
 local config = {
    colorcolumn = "80",
    disabled_filetypes = { "help", "text", "markdown" },
    custom_colorcolumn = {},
    scope = "file",
+   active = true,
 }
 
 local function exceed(buf, win, min_colorcolumn)
@@ -65,7 +64,7 @@ local function update()
 
    local current_buf = vim.api.nvim_get_current_buf()
    local wins = vim.api.nvim_list_wins()
-   if not active then
+   if not config.active then
       for _, win in pairs(wins) do
          vim.wo[win].colorcolumn = nil
       end
@@ -110,7 +109,7 @@ function smartcolumn.setup(user_config)
 end
 
 function smartcolumn.toggle_active()
-    active = not active
+    config.active = not config.active
     update()
 end
 
